@@ -1,6 +1,6 @@
-import { Chat } from '@material-ui/icons';
 import React from 'react';
 import './App.css';
+import Chat from './components/Chat';
 import Sidebar from './components/Sidebar';
 
 function App() {
