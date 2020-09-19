@@ -3,12 +3,12 @@ import './css/SidebarChat.css';
 import { Avatar } from '@material-ui/core';
 import AddCommentIcon from '@material-ui/icons/AddComment';
 import db from '../config/firebase';
-import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function SidebarChat(props) {
     const { id, name, addNewChat } = props;
     const [seed, setSeed] = useState("");
-    const { roomId } = useParams();
+
     useEffect(() => {
         setSeed(Math.floor(Math.random() * 5000));
     }, []);
@@ -24,13 +24,15 @@ function SidebarChat(props) {
     }
 
     return !addNewChat ? (
-        <div className="sidebarChat">
-            <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
-            <div className="sidebarChat__info">
-                <h3>{name}</h3>
-                <p>Last Message...</p>
+        <Link to={`/rooms/${id}`}>
+            <div className="sidebarChat">
+                <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
+                <div className="sidebarChat__info">
+                    <h3>{name}</h3>
+                    <p>Last Message...</p>
+                </div>
             </div>
-        </div>
+        </Link>
     ) : (
             <div onClick={createChat} className="addNewChat">
                 <AddCommentIcon />
