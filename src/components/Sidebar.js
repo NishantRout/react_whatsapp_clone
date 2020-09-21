@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './css/Sidebar.css';
-import { Avatar, IconButton } from '@material-ui/core';
+import { Avatar, Button, IconButton } from '@material-ui/core';
 import { Chat, DonutLarge, MoreVert, SearchOutlined } from '@material-ui/icons';
 import SidebarChat from './SidebarChat';
 import db from '../config/firebase';
 import { useStateValue } from '../contexts/StateProvider';
+import firebase from 'firebase';
 
 function Sidebar() {
     const [rooms, setRooms] = useState([]);
@@ -25,10 +26,23 @@ function Sidebar() {
         }
     }, [])
 
+    const signOut = () => {
+        firebase.auth().signOut().then(function () {
+            dispatch({
+                type: "SET_USER",
+                user: null
+            })
+        }).catch(function (error) {
+            alert(error.message)
+        });
+    }
+
     return (
         <div className="sidebar">
             <div className="sidebar__header">
-                <Avatar src={user?.photoURL} />
+                <Button onClick={signOut}>
+                    <Avatar src={user?.photoURL} />
+                </Button>
                 <div className="sidebar__headerRight">
                     <IconButton>
                         <DonutLarge />
